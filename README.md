@@ -30,6 +30,8 @@ Previsualiza la construcción localmente:
 npm run preview
 ```
 
+Para poder ejecutar este comando, primero debes haber ejecutado `npm run build`.
+
 Ejecuta comandos de la CLI de Astro:
 
 ```sh
@@ -184,14 +186,18 @@ git pull
 
 ## Lista de archivos y carpetas
 
-- `.astro/` - Carpeta generada automáticamente que contiene archivos de configuración y caché de Astro.
+Todas aquellas archivos y carpetas que estén entiqueados con `(X)` son generados automáticamente, o es recomendable que sean modificados por el sistema o herramientas de desarrollo, y no deben ser editados manualmente.
+
+- `.astro/` (X) - Carpeta generada automáticamente que contiene archivos de configuración y caché de Astro.
+- `.vercel/` (X) - Carpeta de configuración para despliegue en Vercel.
 - `.vscode/` - Carpeta de configuración para Visual Studio Code.
   - `.vscode/extensions.json` - Archivo que lista las extensiones recomendadas para el proyecto.
   - `.vscode/launch.json` - Archivo de configuración para lanzar y depurar el proyecto en VS Code.
 - `db/` - Carpeta que contiene archivos relacionados con la base de datos.
   - `db/config.ts` - Archivo de configuración de la base de datos.
   - `db/seed.ts` - Archivo para poblar la base de datos con datos iniciales.
-- `node_modules/` - Carpeta que contiene las dependencias instaladas del proyecto.
+- `dist/` (X) - Carpeta generada automáticamente que contiene los archivos construidos para producción.
+- `node_modules/` (X) - Carpeta que contiene las dependencias instaladas del proyecto.
 - `public/` - Carpeta que contiene archivos estáticos accesibles públicamente.
 - `src/` - Carpeta que contiene el código fuente del proyecto.
   - `src/components/` - Carpeta para componentes reutilizables.
@@ -203,8 +209,8 @@ git pull
 - `.prettierignore` - Archivo que especifica qué archivos y carpetas deben ser ignorados por Prettier.
 - `.prettierrc` - Archivo de configuración para Prettier, el formateador de código.
 - `astro.config.mjs` - Archivo de configuración principal de Astro.
-- `package-lock.json` - Archivo que registra las versiones exactas de las dependencias instaladas.
-- `package.json` - Archivo que contiene metadatos del proyecto y scripts de npm.
+- `package-lock.json` (X) - Archivo que registra las versiones exactas de las dependencias instaladas.
+- `package.json` (X) - Archivo que contiene metadatos del proyecto y scripts de npm.
 - `README.md` - Archivo de documentación del proyecto (este archivo).
 - `tsconfig.json` - Archivo de configuración para TypeScript.
 
