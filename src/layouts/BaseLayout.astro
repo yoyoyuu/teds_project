@@ -1,0 +1,22 @@
+---
+// Load global styles (including Tailwind)
+import "../styles/global.css";
+
+// Load core components
+import Head from "../components/core/Head.astro";
+import Header from "../components/core/Header.astro";
+import Footer from "../components/core/Footer.astro";
+---
+
+<!doctype html>
+<html lang="es">
+    <Head />
+    <!-- With these Tailwind classes, the footer is always stuck to the bottom -->
+    <body class="flex min-h-screen flex-col bg-neutral-300">
+        <Header />
+        <div class="flex-grow">
+            <slot />
+        </div>
+        <Footer />
+    </body>
+</html>
