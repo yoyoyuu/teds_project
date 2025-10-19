@@ -23,9 +23,9 @@ const areas = [
 ];
 
 export default function AreasPage() {
-    const [selectedArea, setSelectedArea] = useState(null); 
+    const [selectedArea, setSelectedArea] = useState(null);
 
-    const handleStart = () => {
+    const handleStart = () => { // para boton del examen
         if (selectedArea) {
             window.location.href = "/diagnostico";
         }
@@ -50,6 +50,19 @@ export default function AreasPage() {
                         onSelect={setSelectedArea}
                     />
                 ))}
+            </div>
+
+            <div className="sticky bottom-0 py-4 flex justify-center">
+                <button
+                    onClick={handleStart}
+                    disabled={!selectedArea}
+                    className={`px-6 py-3 rounded-lg shadow font-medium transition-colors ${selectedArea
+                        ? "bg-gray-700  hover:bg-green-500 text-white"
+                        : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                        }`}
+                >
+                    Iniciar examen diagnóstico
+                </button>
             </div>
         </section>
     );
