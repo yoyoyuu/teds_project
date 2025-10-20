@@ -2,9 +2,27 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
 import PlaceholderImage from "../assets/dummy_100x100_ffffff_cccccc.png";
+import { type FixedLengthArray } from "../types";
+
+const answers: FixedLengthArray<number, 4> = [623, 513, 613, 633];
+
+async function shuffleAnswers(
+    arr: FixedLengthArray<number, 4>
+): Promise<FixedLengthArray<number, 4>> {
+    for (let i: number = arr.length - 1; i > 0; i--) {
+        const j: number = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+const shuffledAnswers: FixedLengthArray<number, 4> =
+    await shuffleAnswers(answers);
+
+const letters: FixedLengthArray<string, 4> = ["a", "b", "c", "d"];
 ---
 
-<BaseLayout backgroundColor="bg-blue-100">
+<BaseLayout backgroundColor="bg-green-50">
     <div class="m-3 flex items-center justify-between">
         <div class="w-1/3 bg-red-400/0">
             <div
@@ -40,12 +58,26 @@ import PlaceholderImage from "../assets/dummy_100x100_ffffff_cccccc.png";
             </div>
         </div>
     </div>
-    <div class="mx-18 my-9 rounded-3xl bg-blue-400 p-5 relative">
-        <p class="absolute top-1 left-4 text-md font-medium text-white">
+    <div class="relative mx-18 my-9 rounded-3xl bg-blue-400 p-5">
+        <p class="text-md absolute top-1 left-4 font-medium text-white">
             Pregunta 1.
         </p>
         <p class="text-center text-4xl font-semibold text-white">
             ¿Cuál es el resultado de 345 + 278?
         </p>
+    </div>
+    <div class="mx-24 grid grid-cols-2 gap-x-24 gap-y-8">
+        {
+            shuffledAnswers.map((answer, index) => (
+                <div class="flex justify-center">
+                    <button class="relative w-full rounded-3xl border border-blue-500 bg-white p-3 shadow hover:cursor-pointer">
+                        <span class="absolute top-1/2 left-0 flex h-16 w-16 -translate-x-1/4 -translate-y-1/2 items-center justify-center rounded-full bg-red-700 text-2xl font-medium text-white">
+                            {letters[index]}&rpar;
+                        </span>
+                        <p class="text-3xl font-medium text-black">{answer}</p>
+                    </button>
+                </div>
+            ))
+        }
     </div>
 </BaseLayout>
