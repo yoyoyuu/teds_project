@@ -5,7 +5,7 @@ export default function AreaCard({ title, description, image, selected, onSelect
         <div
             onClick={() => onSelect && onSelect(title)}
             className={`flex items-center gap-4 p-4 rounded-xl shadow-md cursor-pointer transition-colors
-        ${selected ? "bg-green-500 text-white" : "bg-[#ffb935] hover:bg-[#ffcc4d]"}`}
+        ${selected ? "bg-green-600 text-white" : "bg-[#ffb935] hover:bg-[#ffcc4d]"}`}
         >
             <img
                 src={image}

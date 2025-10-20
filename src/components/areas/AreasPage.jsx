@@ -33,7 +33,7 @@ export default function AreasPage() {
 
     return (
         <section className="max-w-4xl mx-auto py-10 px-4">
-            <button className="mb-6 px-4 py-2 bg-blue-400 hover:bg-blue-500 text-white rounded-lg shadow">
+            <button className="mb-6 px-4 py-2 bg-blue-400 hover:bg-[#5995ed] text-white rounded-lg shadow">
                 <a href="/">← Volver</a>
             </button>
 
@@ -57,7 +57,7 @@ export default function AreasPage() {
                     onClick={handleStart}
                     disabled={!selectedArea}
                     className={`px-6 py-3 rounded-lg shadow font-medium transition-colors ${selectedArea
-                        ? "bg-gray-700  hover:bg-green-500 text-white"
+                        ? "bg-gray-700  hover:bg-green-600 text-white"
                         : "bg-gray-300 text-gray-500 cursor-not-allowed"
                         }`}
                 >
