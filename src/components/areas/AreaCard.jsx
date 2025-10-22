@@ -14,7 +14,7 @@ export default function AreaCard({ title, description, image, selected, onSelect
             />
             <div>
                 <h3 className="text-lg font-semibold">{title}</h3>
-                <p className="text-sm">{description}</p>
+                <p className="text-base">{description}</p>
             </div>
         </div>
     );
