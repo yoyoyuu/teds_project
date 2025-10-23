@@ -25,7 +25,7 @@ export async function POST({ request }: { request: Request }) {
     let correct: number = 0;
     for (const a of payload.answers) {
         const q: Question | undefined = questions.find((x) => x.id === a.question_id);
-        if (q && q.options[0] === a.answer) {
+        if (q && q.correct === a.answer) {
             correct++;
         }
     }

@@ -12,6 +12,7 @@ export interface Question {
     id: number;
     question: string;
     options: FixedLengthArray<number, 4>;
+    correct: number;
 }
 
 export interface StatsResult {
