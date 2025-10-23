@@ -2,6 +2,7 @@ import type { JSX } from "astro/jsx-runtime";
 import { useEffect, useRef, useState, type Dispatch, type SetStateAction, type RefObject } from 'react';
 import type { Question, ExamResult, Answer } from "../../types";
 import PlaceholderImage from "../../assets/dummy_100x100_ffffff_cccccc.png";
+import TimerDisplay from "../TimerDisplay";
 
 export default function ExamPage(): JSX.Element {
     const [questions, setQuestions]: [Question[] | null, Dispatch<SetStateAction<Question[] | null>>] = useState<Question[] | null>(null);
@@ -97,7 +98,11 @@ export default function ExamPage(): JSX.Element {
                     <p className="text-lg font-bold">Examen Diagnóstico</p>
                 </div>
                 <div className="flex items-center gap-4">
-                    {/* Timer seconds={seconds} */}
+                    <div className="h-fit rounded-2xl bg-amber-400 px-6 py-2 shadow">
+                        <p className="text-4xl font-medium">
+                            <TimerDisplay seconds={seconds} />
+                        </p>
+                    </div>
                     <img src={PlaceholderImage.src} alt="reloj" className="w-12 h-12" />
                 </div>
             </header>
