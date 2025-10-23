@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, type Dispatch, type SetStateAction, type R
 import type { Question, ExamResult, Answer } from "../../types";
 import PlaceholderImage from "../../assets/dummy_100x100_ffffff_cccccc.png";
 import TimerDisplay from "../TimerDisplay";
+import QuestionCard from "./QuestionCard";
 
 export default function ExamPage(): JSX.Element {
     const [questions, setQuestions]: [Question[] | null, Dispatch<SetStateAction<Question[] | null>>] = useState<Question[] | null>(null);
@@ -112,7 +113,7 @@ export default function ExamPage(): JSX.Element {
                 <h2 className="text-2xl font-semibold mt-2">{current.question}</h2>
             </div>
 
-            {/* QuestionCard question={current} onSelect={onSelect} */}
+            <QuestionCard question={current} onSelect={onSelect} />
 
             {result && (
                 <div className="p-4 bg-white rounded shadow">
