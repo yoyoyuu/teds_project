@@ -3,9 +3,14 @@ export type FixedLengthArray<T, N extends number, A extends T[] = []> =
         ? A
         : FixedLengthArray<T, N, [...A, T]>;
 
+export interface Answer {
+    question_id: number;
+    answer: number;
+}
+
 export interface ExamResult {
     user_id?: string;
-    answers: Array<{ question_id: number; answer: number }>;
+    answers: Answer[];
 }
 
 export interface Question {
