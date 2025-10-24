@@ -109,7 +109,9 @@ export default function ExamPage(): JSX.Element {
                 <div className="w-1/3 bg-blue-400/0">
                     <div className="ms-auto flex w-fit flex-row items-center gap-4">
                         <div className="h-fit rounded-2xl bg-amber-400 px-8 py-3 shadow">
-                            <p className="text-center text-4xl font-medium">00:00:00</p>
+                            <p className="text-center text-4xl font-medium">
+                                <TimerDisplay seconds={seconds} />
+                            </p>
                         </div>
                         <img src={PlaceholderImage.src} alt="reloj" className="h-fit w-fit" />
                     </div>
