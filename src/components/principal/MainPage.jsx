@@ -1,8 +1,12 @@
-// src/components/principal/MainPage.jsx
 import { useState } from "react";
+import ButtonPrimary from "../ui/ButtonPrimary";
 
 export default function MainPage() {
     const [hovered, setHovered] = useState(null);
+
+    const handleNavigation = (path) => {
+        window.location.href = path;
+    };
 
     return (
         <div className="flex flex-col items-center justify-between min-h-screen text-center">
@@ -10,18 +14,23 @@ export default function MainPage() {
 
             <div className="flex gap-2 mb-8">
                 {["Registrarse", "Inicio de Sesión"].map((text, idx) => (
-                    <button
+                    <ButtonPrimary
                         key={idx}
+                        text={text}
+                        isHovered={hovered === idx}
                         onMouseEnter={() => setHovered(idx)}
                         onMouseLeave={() => setHovered(null)}
-                        className={`px-10 py-3 rounded-md text-font-semibold transition-all duration-300 
-                            ${hovered === idx ? "bg-green-600 text-white" : "bg-blue-500 text-white"
-                            }`}
-                    >
-                        {text}
-                    </button>
+                        onClick={() => {
+                            if (text === "Registrarse") {
+                                window.location.href = "/register";
+                            } else {
+                                window.location.href = "/login";
+                            }
+                        }}
+                    />
                 ))}
             </div>
+
 
             <section className="text-gray-800 p-6 max-w-4xl mx-auto rounded-t-lg space-y-6">
                 <div className="bg-[#FFB30F] p-4 rounded-lg shadow-sm">
@@ -45,6 +54,5 @@ export default function MainPage() {
                 </div>
             </section>
         </div>
-
     );
 }
