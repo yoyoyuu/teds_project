@@ -43,8 +43,8 @@ export default function AreasPage() {
 
             {selectedArea && (
                 <div className="absolute top-4 right-6 flex items-center gap-2 bg-white border border-gray-400 rounded-lg shadow px-3 py-1">
-                    <span className="text-red-600 font-semibold text-sm">
-                        Cámara activada
+                    <span className="text-[#931f1d] font-semibold text-sm">
+                        Cámara lista para activarse
                     </span>
                     <img
                         src="/images/camera-icon.png"

@@ -1,11 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import MainPage from "../components/principal/MainPage";
 ---
 
 <BaseLayout>
-    <div class="m-3 bg-white p-3 shadow">
-        <p>Página principal en progreso.</p>
-        <p>ir a la areas:</p>
-        <a href="/areas" class="text-blue-500 underline">Áreas</a>
-    </div>
+    <MainPage client:load/>
 </BaseLayout>
