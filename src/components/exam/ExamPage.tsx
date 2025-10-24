@@ -139,16 +139,19 @@ export default function ExamPage(): JSX.Element {
                     </div>
                 </div>
             </div>
-            <QuestionCard
-                index={index + 1}
-                question={current}
-                onSelect={onSelect}
-            />
-            {result && (
+            {result ? (
                 <div className="m-4 rounded bg-white p-4 shadow">
-                    <p>Resultado: {JSON.stringify(result)}</p>
+                    <p>
+                        Resultado: {(typeof result === "string" ? result : JSON.stringify(result)).replace(/,/g, ", ")}
+                    </p>
                     <p>Redirigiendo al panel principal...</p>
                 </div>
+            ) : (
+                <QuestionCard
+                    index={index + 1}
+                    question={current}
+                    onSelect={onSelect}
+                />
             )}
         </>
     );
