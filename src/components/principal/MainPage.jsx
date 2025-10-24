@@ -24,18 +24,16 @@ export default function MainPage() {
             </div>
 
             <section className="text-gray-800 p-6 max-w-4xl mx-auto rounded-t-lg space-y-6">
-                {/* Primer contenedor */}
                 <div className="bg-[#FFB30F] p-4 rounded-lg shadow-sm">
                     <h2 className="text-lg sm:text-2xl md:text-2xl font-bold mb-2">
                         ¿Qué hace esta plataforma y por qué es especial?
                     </h2>
                     <p className="text-sm sm:text-base leading-relaxed">
-                        <Busca></Busca> adaptar tu aprendizaje y la forma en que vas desarrollando conocimientos
+                        Busca adaptar tu aprendizaje y la forma en que vas desarrollando conocimientos
                         por medio de tus emociones y tu sentir a la hora de aprender.
                     </p>
                 </div>
 
-                {/* Segundo contenedor */}
                 <div className="bg-[#FFB30F] p-4 rounded-lg shadow-sm">
                     <h2 className="text-lg sm:text-2xl md:text-2xl font-bold mb-2">
                         ¿Qué queremos lograr contigo?
