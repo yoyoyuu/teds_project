@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "question": "¿Cuál es el resultado de 345 + 278?",
+        "options": [623, 513, 613, 633],
+        "correct": 623
+    },
+    {
+        "id": 2,
+        "question": "¿Cuál es el resultado de 512 - 198?",
+        "options": [314, 324, 304, 334],
+        "correct": 314
+    },
+    {
+        "id": 3,
+        "question": "¿Cuál es el resultado de 45 × 12?",
+        "options": [540, 550, 530, 560],
+        "correct": 540
+    },
+    {
+        "id": 4,
+        "question": "¿Cuál es el resultado de 144 ÷ 12?",
+        "options": [12, 14, 10, 16],
+        "correct": 12
+    },
+    {
+        "id": 5,
+        "question": "¿Cuál es el resultado de 25% de 200?",
+        "options": [50, 40, 60, 70],
+        "correct": 50
+    }
+]
