@@ -1,4 +1,6 @@
 import { readFile, writeFile } from 'fs/promises';
+import os from 'os';
+import path from 'path';
 import type { ExamResult, Question, StatsResult } from '../../types';
 
 function determineLevel(accuracy: number): string {
@@ -33,10 +35,13 @@ export async function POST({ request }: { request: Request }) {
     const accuracy: number = Math.round((correct / total) * 100);
     const user_level: string = determineLevel(accuracy);
 
-    const resultsFile: URL = new URL("../../../db/results.json", import.meta.url);
+    // Write results to the OS temp directory to avoid triggering Astro's file watcher
+    // (which would cause the dev server to reload when project files change).
+    const resultsFilePath: string = path.join(os.tmpdir(), "teds_project_results.json");
     let results: StatsResult[] = [];
     try {
-        results = JSON.parse(await readFile(resultsFile, "utf-8"));
+        const raw = await readFile(resultsFilePath, "utf-8");
+        results = JSON.parse(raw);
     } catch {
         results = [];
     }
@@ -50,7 +55,7 @@ export async function POST({ request }: { request: Request }) {
         timestamp: new Date().toISOString(),
     };
     results.push(result);
-    await writeFile(resultsFile, JSON.stringify(results, null, 2), "utf-8");
+    await writeFile(resultsFilePath, JSON.stringify(results, null, 2), "utf-8");
 
     return new Response(JSON.stringify(result), { status: 200 });
 }
