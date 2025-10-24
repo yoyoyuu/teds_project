@@ -5,7 +5,7 @@ export default function ButtonPrimary({ text, onClick, onMouseEnter, onMouseLeav
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
             className={`px-10 py-3 rounded-md font-semibold transition-all duration-300 
-                ${isHovered ? "bg-green-600 text-white" : "bg-blue-500 text-white"}
+                ${isHovered ? "bg-green-600 text-white" : "bg-[#5995ed] text-white"}
             `}
         >
             {text}
