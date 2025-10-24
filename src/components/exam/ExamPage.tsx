@@ -87,41 +87,42 @@ export default function ExamPage(): JSX.Element {
     const current: Question = questions[index];
 
     return (
-        <div className="space-y-6">
-            <header className="flex items-center justify-between p-4 bg-amber-400 rounded shadow">
-                <div className="flex items-center gap-4">
-                    <img src={PlaceholderImage.src} alt="categoria" className="w-16 h-16 object-cover rounded" />
-                    <div>
-                        <p className="text-xl font-medium">Sumas, restas, multiplicación y división</p>
-                    </div>
-                </div>
-                <div className="text-center">
-                    <p className="text-lg font-bold">Examen Diagnóstico</p>
-                </div>
-                <div className="flex items-center gap-4">
-                    <div className="h-fit rounded-2xl bg-amber-400 px-6 py-2 shadow">
-                        <p className="text-4xl font-medium">
-                            <TimerDisplay seconds={seconds} />
+        <>
+            <div className="m-3 flex items-center justify-between">
+                <div className="w-1/3 bg-red-400/0">
+                    <div
+                        className="flex w-67 flex-row items-center rounded-md bg-amber-400 p-3 shadow"
+                    >
+                        <img src={PlaceholderImage.src} alt="categoria" className="h-fit w-fit" />
+                        <p className="mx-3 text-xl text-black">
+                            Sumas, restas, multiplicación y división
                         </p>
                     </div>
-                    <img src={PlaceholderImage.src} alt="reloj" className="w-12 h-12" />
                 </div>
-            </header>
-
-            <div className="p-6 bg-blue-400 text-white rounded">
-                <p className="text-sm">Pregunta {index + 1}</p>
-                <h2 className="text-2xl font-semibold mt-2">{current.question}</h2>
+                <div className="w-1/3 bg-green-400/0">
+                    <div
+                        className="mx-auto w-fit rounded-md border-2 border-amber-500 bg-amber-400 px-8 py-2 shadow"
+                    >
+                        <p className="text-center text-xl font-bold">Exámen Diagnóstico</p>
+                    </div>
+                </div>
+                <div className="w-1/3 bg-blue-400/0">
+                    <div className="ms-auto flex w-fit flex-row items-center gap-4">
+                        <div className="h-fit rounded-2xl bg-amber-400 px-8 py-3 shadow">
+                            <p className="text-center text-4xl font-medium">00:00:00</p>
+                        </div>
+                        <img src={PlaceholderImage.src} alt="reloj" className="h-fit w-fit" />
+                    </div>
+                </div>
             </div>
-
-            <QuestionCard question={current} onSelect={onSelect} />
-
+            <QuestionCard index={index + 1} question={current} onSelect={onSelect} />
             {result && (
-                <div className="p-4 bg-white rounded shadow">
+                <div className="m-4 p-4 bg-white rounded shadow">
                     <p>Resultado: {JSON.stringify(result)}</p>
                     <p>Redirigiendo al panel principal...</p>
                 </div>
             )}
-        </div>
+        </>
     );
 }
 
