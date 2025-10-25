@@ -1,10 +1,8 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ExamPage from "../components/exam/ExamPage";
 ---
 
-<BaseLayout>
-    <h2 class="text-2xl font-bold text-center mt-8">Página de Diagnóstico</h2>
-    <p class="max-w-3xl mx-auto mt-4 text-center">
-        Aqui aun no hay nada pequeño, pero pronto habra un examen o yoquese
-    </p>
+<BaseLayout backgroundColor="bg-green-50">
+    <ExamPage client:load />
 </BaseLayout>
