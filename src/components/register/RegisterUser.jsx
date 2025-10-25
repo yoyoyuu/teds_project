@@ -12,22 +12,20 @@ export default function RegisterUser() {
     });
 
     const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
+        setErrorMessage("");
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // 🔍 Validación mínima en frontend
         if (formData.password !== formData.confirmPassword) {
-            alert("Las contraseñas no coinciden");
-            return;
-        }
-
-        if (formData.password.length < 6) {
-            alert("La contraseña debe tener al menos 6 caracteres");
+            setErrorMessage("Las contraseñas no coinciden");
             return;
         }
 
@@ -51,14 +49,13 @@ export default function RegisterUser() {
             const data = await res.json();
 
             if (res.ok && data.success) {
-                alert("Registro exitoso");
                 window.location.href = "/areas";
             } else {
-                alert(data.error || "Error al registrar");
+                setErrorMessage(data.error || "Error al registrar");
             }
         } catch (err) {
             console.error("Error al registrar:", err);
-            alert("No se pudo conectar con el servidor");
+            setErrorMessage("No se pudo conectar con el servidor");
         } finally {
             setLoading(false);
         }
@@ -75,7 +72,7 @@ export default function RegisterUser() {
             <div className="bg-white shadow-lg rounded-xl p-8 w-80 flex flex-col items-center">
                 <div className="text-6xl mb-6 text-gray-600">👤</div>
 
-                <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
+                <form onSubmit={handleSubmit} noValidate className="w-full flex flex-col gap-4">
                     <input
                         type="text"
                         name="name"
@@ -136,6 +133,12 @@ export default function RegisterUser() {
                             required
                         />
                     </div>
+
+                    {errorMessage && (
+                        <p className="text-red-600 text-sm font-medium text-center flex items-center justify-center gap-1">
+                            {errorMessage}
+                        </p>
+                    )}
 
                     <button
                         type="submit"
