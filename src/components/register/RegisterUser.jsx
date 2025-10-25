@@ -66,9 +66,64 @@ export default function RegisterUser() {
     return (
         <div className="min-h-screen flex flex-col items-center justify-center relative">
             <BackButton to="/" position="top-4 left-4" />
+
             <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
                 Registrar Usuario
             </h1>
+
+            <div className="bg-white shadow-lg rounded-xl p-8 w-80 flex flex-col items-center">
+                <div className="text-6xl mb-6 text-gray-600">👤</div>
+
+                <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Nombre completo"
+                        value={formData.name}
+                        onChange={handleChange}
+                        className="border rounded-md p-2"
+                        required
+                    />
+                    <input
+                        type="number"
+                        name="age"
+                        placeholder="Edad (7–11 años)"
+                        value={formData.age}
+                        onChange={handleChange}
+                        className="border rounded-md p-2"
+                        min="7"
+                        max="11"
+                        required
+                    />
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Correo electrónico"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="border rounded-md p-2"
+                        required
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Contraseña"
+                        value={formData.password}
+                        onChange={handleChange}
+                        className="border rounded-md p-2"
+                        required
+                    />
+                    <input
+                        type="password"
+                        name="confirmPassword"
+                        placeholder="Confirmar contraseña"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
+                        className="border rounded-md p-2"
+                        required
+                    />
+                </form>
+            </div>
         </div>
     );
 }
