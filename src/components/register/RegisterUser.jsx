@@ -127,8 +127,8 @@ export default function RegisterUser() {
                         type="submit"
                         disabled={loading}
                         className={`mt-2 rounded-md py-2 font-semibold text-white transition-colors ${loading
-                                ? "bg-gray-400 cursor-not-allowed"
-                                : "bg-green-500 hover:bg-green-600"
+                            ? "bg-gray-400 cursor-not-allowed"
+                            : "bg-green-500 hover:bg-green-600"
                             }`}
                     >
                         {loading ? "Registrando..." : "Registrar"}
