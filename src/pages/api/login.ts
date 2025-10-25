@@ -32,5 +32,17 @@ export async function POST({ request }: { request: Request }) {
         );
     }
 
+    const user = users.find((u: any) => u.email === email);
+
+    if (!user) {
+        return new Response(JSON.stringify({ error: "Usuario no encontrado" }), { status: 401 });
+    }
+
+    if (user.password !== password) {
+        return new Response(JSON.stringify({ error: "Contraseña incorrecta" }), { status: 401 });
+    }
+
+    const { password: _, ...safeUser } = user; // pa no enviar contraseña yay
+
     return new Response(JSON.stringify({ success: true }), { status: 200 });
 }
