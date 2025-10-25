@@ -135,7 +135,7 @@ export default function RegisterUser() {
                     </div>
 
                     {errorMessage && (
-                        <p className="text-red-600 text-sm font-medium text-center flex items-center justify-center gap-1">
+                        <p className="text-[#931f1d] text-sm font-medium text-center flex items-center justify-center gap-1">
                             {errorMessage}
                         </p>
                     )}
