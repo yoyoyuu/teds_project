@@ -41,6 +41,31 @@ export async function POST({ request }: { request: Request }) {
             return new Response(JSON.stringify({ success: false, error: "El correo ya está registrado" }), { status: 400 });
         }
 
+        // Para crear nuevo usuario
+        const newUser: User = {
+            id: users.length > 0 ? users[users.length - 1].id + 1 : 1,
+            ...payload,
+        };
+
+        users.push(newUser);
+
+        // guardar usuarios actualizados
+        await writeFile(usersFilePath, JSON.stringify(users, null, 2), "utf-8");
+
+        const response: RegisterResponse = {
+            success: true,
+            message: "Usuario registrado exitosamente",
+            user: {
+                id: newUser.id,
+                name: newUser.name,
+                age: newUser.age,
+                email: newUser.email,
+                role: newUser.role,
+            },
+        };
+
+        return new Response(JSON.stringify(response), { status: 200 });
+
     } catch (error) {
         console.error("Error al registrar:", error);
         return new Response(
