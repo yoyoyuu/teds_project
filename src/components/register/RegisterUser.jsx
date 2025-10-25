@@ -1,5 +1,6 @@
 import { useState } from "react";
 import BackButton from "../ui/BackButton.jsx";
+import { EnvelopeClosedIcon, LockClosedIcon } from "@radix-ui/react-icons";
 
 export default function RegisterUser() {
     const [formData, setFormData] = useState({
