@@ -3,6 +3,8 @@ export type FixedLengthArray<T, N extends number, A extends T[] = []> =
         ? A
         : FixedLengthArray<T, N, [...A, T]>;
 
+// Exam and Question Types
+
 export interface Answer {
     question_id: number;
     answer: number;
@@ -28,4 +30,31 @@ export interface StatsResult {
     accuracy: number;
     user_level: string;
     timestamp: string;
+}
+
+// Register and User Types
+
+export type UserRole = "student" | "teacher";
+
+export interface User {
+  id: number;
+  name: string;
+  age: number;
+  email: string;
+  password: string;
+  role: UserRole;
+}
+
+export interface RegisterRequest {
+  name: string;
+  age: number;
+  email: string;
+  password: string;
+  role: UserRole;
+}
+
+export interface RegisterResponse {
+  success: boolean;
+  message: string;
+  user?: Omit<User, "password">; // devolver datos sin la contraseña
 }
