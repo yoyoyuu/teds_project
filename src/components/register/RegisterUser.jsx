@@ -17,6 +17,20 @@ export default function RegisterUser() {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (formData.password !== formData.confirmPassword) {
+            alert("Las contraseñas no coinciden");
+            return;
+        }
+
+        if (formData.password.length < 6) {
+            alert("La contraseña debe tener al menos 6 caracteres");
+            return;
+        }
+    };
+
     return (
         <div className="min-h-screen flex flex-col items-center justify-center relative">
             <BackButton to="/" position="top-4 left-4" />
