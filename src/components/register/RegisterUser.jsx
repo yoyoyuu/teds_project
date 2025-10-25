@@ -17,7 +17,7 @@ export default function RegisterUser() {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (formData.password !== formData.confirmPassword) {
@@ -28,6 +28,38 @@ export default function RegisterUser() {
         if (formData.password.length < 6) {
             alert("La contraseña debe tener al menos 6 caracteres");
             return;
+        }
+
+        setLoading(true);
+
+        try {
+            const userData = {
+                name: formData.name.trim(),
+                age: Number(formData.age),
+                email: formData.email.trim(),
+                password: formData.password,
+                role: "student", // fijo por ahora ps nomas
+            };
+
+            const res = await fetch("/api/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(userData),
+            });
+
+            const data = await res.json();
+
+            if (res.ok && data.success) {
+                alert("Registro exitoso");
+                window.location.href = "/areas";
+            } else {
+                alert((data.error || "Error al registrar"));
+            }
+        } catch (err) {
+            console.error("Error al registrar:", err);
+            alert("No se pudo conectar con el servidor");
+        } finally {
+            setLoading(false);
         }
     };
 
