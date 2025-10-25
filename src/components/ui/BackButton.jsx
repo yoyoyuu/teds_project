@@ -1,14 +1,12 @@
-export default function BackButton({ to = "/", label = "← Volver" }) {
-  const handleClick = () => {
-    window.location.href = to;
-  };
-
+export default function BackButton({ target = "/", text = "← Volver" }) {
   return (
     <button
-      onClick={handleClick}
-      className="mb-6 px-4 py-2 bg-blue-400 hover:bg-[#5995ed] text-white rounded-lg shadow"
+      onClick={() => (window.location.href = target)}
+      className="absolute top-6 left-6 bg-blue-400 hover:bg-blue-500 
+                 text-white rounded-lg px-4 py-2 font-semibold shadow-md"
+      style={{ zIndex: 50 }}
     >
-      {label}
+      {text}
     </button>
   );
 }
