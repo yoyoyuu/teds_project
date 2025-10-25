@@ -54,7 +54,7 @@ export default function RegisterUser() {
                 alert("Registro exitoso");
                 window.location.href = "/areas";
             } else {
-                alert((data.error || "Error al registrar"));
+                alert(data.error || "Error al registrar");
             }
         } catch (err) {
             console.error("Error al registrar:", err);
@@ -85,6 +85,7 @@ export default function RegisterUser() {
                         className="border rounded-md p-2"
                         required
                     />
+
                     <input
                         type="number"
                         name="age"
@@ -96,45 +97,56 @@ export default function RegisterUser() {
                         max="11"
                         required
                     />
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Correo electrónico"
-                        value={formData.email}
-                        onChange={handleChange}
-                        className="border rounded-md p-2"
-                        required
-                    />
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Contraseña"
-                        value={formData.password}
-                        onChange={handleChange}
-                        className="border rounded-md p-2"
-                        required
-                    />
-                    <input
-                        type="password"
-                        name="confirmPassword"
-                        placeholder="Confirmar contraseña"
-                        value={formData.confirmPassword}
-                        onChange={handleChange}
-                        className="border rounded-md p-2"
-                        required
-                    />
+
+                    <div className="relative">
+                        <EnvelopeClosedIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Correo electrónico"
+                            value={formData.email}
+                            onChange={handleChange}
+                            className="border rounded-md p-2 pl-10 w-full"
+                            required
+                        />
+                    </div>
+
+                    <div className="relative">
+                        <LockClosedIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Contraseña"
+                            value={formData.password}
+                            onChange={handleChange}
+                            className="border rounded-md p-2 pl-10 w-full"
+                            required
+                        />
+                    </div>
+
+                    <div className="relative">
+                        <LockClosedIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                        <input
+                            type="password"
+                            name="confirmPassword"
+                            placeholder="Confirmar contraseña"
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
+                            className="border rounded-md p-2 pl-10 w-full"
+                            required
+                        />
+                    </div>
 
                     <button
                         type="submit"
                         disabled={loading}
                         className={`mt-2 rounded-md py-2 font-semibold text-white transition-colors ${loading
-                            ? "bg-gray-400 cursor-not-allowed"
-                            : "bg-green-500 hover:bg-green-600"
+                                ? "bg-gray-400 cursor-not-allowed"
+                                : "bg-green-500 hover:bg-green-600"
                             }`}
                     >
                         {loading ? "Registrando..." : "Registrar"}
                     </button>
-
                 </form>
             </div>
         </div>
