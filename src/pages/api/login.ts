@@ -22,5 +22,15 @@ export async function POST({ request }: { request: Request }) {
     const usersFilePath = path.join(os.tmpdir(), "teds_project_users.json");
     let users = [];
 
+    try {
+        const data = await readFile(usersFilePath, "utf-8");
+        users = JSON.parse(data);
+    } catch {
+        return new Response(
+            JSON.stringify({ success: false, error: "No hay usuarios registrados" }),
+            { status: 404 }
+        );
+    }
+
     return new Response(JSON.stringify({ success: true }), { status: 200 });
 }
