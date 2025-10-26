@@ -23,7 +23,6 @@ export default function RegisterUser() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // 🔍 Validación mínima en frontend
         if (formData.password !== formData.confirmPassword) {
             setErrorMessage("Las contraseñas no coinciden");
             return;

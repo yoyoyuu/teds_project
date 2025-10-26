@@ -1,5 +1,6 @@
 import { useState } from "react";
 import BackButton from "../ui/BackButton.jsx";
+import { EnvelopeClosedIcon, LockClosedIcon } from "@radix-ui/react-icons";
 
 export default function LoginUser() {
     const [formData, setFormData] = useState({
@@ -53,25 +54,33 @@ export default function LoginUser() {
             <div className="bg-white shadow-lg rounded-xl p-8 w-80 flex flex-col items-center">
                 <div className="text-6xl mb-6 text-gray-600">👤</div>
 
-                <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Correo electrónico"
-                        value={formData.email}
-                        onChange={handleChange}
-                        className="border rounded-md p-2"
-                        required
-                    />
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Contraseña"
-                        value={formData.password}
-                        onChange={handleChange}
-                        className="border rounded-md p-2"
-                        required
-                    />
+                <form onSubmit={handleSubmit} noValidate className="w-full flex flex-col gap-4">
+
+                    <div className="relative">
+                        <EnvelopeClosedIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Correo electrónico"
+                            value={formData.email}
+                            onChange={handleChange}
+                            className="border rounded-md p-2 pl-10 w-full"
+                            required
+                        />
+                    </div>
+                    
+                    <div className="relative">
+                        <LockClosedIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Contraseña"
+                            value={formData.password}
+                            onChange={handleChange}
+                            className="border rounded-md p-2 pl-10 w-full"
+                            required
+                        />
+                    </div>
 
                     <button
                         type="submit"
