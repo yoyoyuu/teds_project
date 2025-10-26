@@ -44,5 +44,15 @@ export async function POST({ request }: { request: Request }) {
 
     const { password: _, ...safeUser } = user; // pa no enviar contraseña yay
 
-    return new Response(JSON.stringify({ success: true }), { status: 200 });
+    const dummyToken = `dummy-${safeUser.id}-${Date.now()}`;
+
+    return new Response(
+        JSON.stringify({
+            success: true,
+            message: "Inicio de sesión exitoso",
+            user: safeUser,
+            token: dummyToken,
+        }),
+        { status: 200 }
+    );
 }
