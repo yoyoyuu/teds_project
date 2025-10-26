@@ -9,6 +9,7 @@ export default function LoginUser() {
     });
 
     const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -19,6 +20,7 @@ export default function LoginUser() {
         e.preventDefault();
 
         setLoading(true);
+        setErrorMessage("");
 
         try {
             const res = await fetch("/api/login", {
@@ -35,11 +37,11 @@ export default function LoginUser() {
                     window.location.href = "/areas";
                 }, 1000);
             } else {
-                alert(data.error);
+                setErrorMessage(data.error || "Error al iniciar sesión");
             }
         } catch (error) {
             console.error("Error al iniciar sesión:", error);
-            alert("Error al conectar con el servidor");
+            setErrorMessage("Error al conectar con el servidor");
         } finally {
             setLoading(false);
         }
@@ -68,7 +70,7 @@ export default function LoginUser() {
                             required
                         />
                     </div>
-                    
+
                     <div className="relative">
                         <LockClosedIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                         <input
@@ -81,6 +83,12 @@ export default function LoginUser() {
                             required
                         />
                     </div>
+
+                    {errorMessage && (
+                        <p className="text-[#931f1d] text-sm font-medium text-center flex items-center justify-center gap-1">
+                            {errorMessage}
+                        </p>
+                    )}
 
                     <button
                         type="submit"
