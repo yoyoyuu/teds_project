@@ -71,9 +71,11 @@ export default function ExamPage(): JSX.Element {
         if (timerRef.current) {
             clearInterval(timerRef.current);
             timerRef.current = null;
-            const payload: ExamResult = {
-                user_id: "guest",
+            const payload: ExamResult & { token?: string; username?: string } = {
+                user_id: localStorage.getItem("user_id") || "guest",
                 answers: finalAnswers,
+                token: localStorage.getItem("token") || undefined,
+                username: localStorage.getItem("username") || undefined,
             };
             try {
                 const res: Response = await fetch("/api/submit", {
@@ -83,7 +85,11 @@ export default function ExamPage(): JSX.Element {
                 });
                 const data = await res.json();
                 setResult(data);
-                setTimeout(() => (window.location.href = "/"), 3000);
+
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("username", data.username);
+
+                setTimeout(() => (window.location.href = "/dashboard"), 3000);
             } catch (err) {
                 console.error(err);
                 setResult({ error: "submit_failed" });

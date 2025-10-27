@@ -48,6 +48,9 @@ export default function RegisterUser() {
             const data = await res.json();
 
             if (res.ok && data.success) {
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("username", data.user.name);
+                localStorage.setItem("user_id", data.user.id.toString());
                 window.location.href = "/areas";
             } else {
                 setErrorMessage(data.error || "Error al registrar");
@@ -143,8 +146,8 @@ export default function RegisterUser() {
                         type="submit"
                         disabled={loading}
                         className={`mt-2 rounded-md py-2 font-semibold text-white transition-colors ${loading
-                                ? "bg-gray-400 cursor-not-allowed"
-                                : "bg-green-500 hover:bg-green-600"
+                            ? "bg-gray-400 cursor-not-allowed"
+                            : "bg-green-500 hover:bg-green-600"
                             }`}
                     >
                         {loading ? "Registrando..." : "Registrar"}

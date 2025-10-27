@@ -10,7 +10,7 @@ function determineLevel(accuracy: number): string {
 }
 
 export async function POST({ request }: { request: Request }) {
-    const payload: ExamResult = await request.json();
+    const payload: ExamResult & { token?: string; username?: string } = await request.json();
 
     if (typeof payload.user_id !== "string" || !Array.isArray(payload.answers)) {
         return new Response(JSON.stringify({ error: "Invalid payload" }), { status: 400 });
@@ -57,5 +57,11 @@ export async function POST({ request }: { request: Request }) {
     results.push(result);
     await writeFile(resultsFilePath, JSON.stringify(results, null, 2), "utf-8");
 
-    return new Response(JSON.stringify(result), { status: 200 });
+    return new Response(
+        JSON.stringify({
+            ...result,
+            token: payload.token || `dummy-${payload.user_id}-${Date.now()}`,
+            username: payload.username || "guest"
+        }),
+        { status: 200 });
 }

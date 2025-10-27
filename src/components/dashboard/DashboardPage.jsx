@@ -18,11 +18,13 @@ export default function Dashboard() {
 
     // Para cargar al usuario desde localStorage (TEMPORAL)
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
-        } else {
+        const token = localStorage.getItem("token");
+        const username = localStorage.getItem("username");
+
+        if (!token || !username) {
             window.location.href = "/login";
+        } else {
+            setUser({ name: username });
         }
     }, []);
 
@@ -38,7 +40,8 @@ export default function Dashboard() {
     const handleLogout = () => {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
-        window.location.href = "/";
+        localStorage.removeItem("user_id");
+        window.location.href = "login";
     };
 
     const reinforcementTopics = [

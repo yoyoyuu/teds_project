@@ -32,8 +32,9 @@ export default function LoginUser() {
             const data = await res.json();
 
             if (res.ok && data.success) {
-                localStorage.setItem("user", JSON.stringify(data.user));
-
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("username", data.user.name);
+                localStorage.setItem("user_id", data.user.id.toString());
                 alert("Inicio de sesión exitoso");
                 setTimeout(() => {
                     window.location.href = "/dashboard";
