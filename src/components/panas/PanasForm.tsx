@@ -89,7 +89,7 @@ export default function PanasForm(): JSX.Element {
                 body: JSON.stringify(payload),
             });
             // redirige al panel principal (cumple <5s si es inmediato)
-            window.location.href = "/";
+            window.location.href = "/diagnostic-exam";
         } catch {
             setError("Error al enviar. Intenta nuevamente.");
             setSubmitting(false);
