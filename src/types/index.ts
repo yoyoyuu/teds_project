@@ -58,3 +58,29 @@ export interface RegisterResponse {
   message: string;
   user?: Omit<User, "password">; // devolver datos sin la contraseña
 }
+
+export interface PanasAnswer {
+    id: number;
+    label: string;
+    value: number;
+}
+
+export interface PanasResponseItem {
+    question_id: number;
+    value: number;
+}
+
+export interface PanasResult {
+    user_id?: string;
+    answers: PanasResponseItem[];
+    pa_score?: number;
+    na_score?: number;
+    timestamp?: string;
+}
+
+export interface PanasStoredResult {
+    user_id: string;
+    pa_score: number;
+    na_score: number;
+    timestamp: string;
+}
