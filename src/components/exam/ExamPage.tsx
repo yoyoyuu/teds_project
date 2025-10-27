@@ -7,10 +7,11 @@ import {
     type SetStateAction,
     type RefObject,
 } from "react";
-import type { Question, ExamResult, Answer } from "../../types";
+import type { Question, ExamResult, Answer, EmotionEntry } from "../../types";
 import PlaceholderImage from "../../assets/dummy_100x100_ffffff_cccccc.png";
 import TimerDisplay from "../TimerDisplay";
 import QuestionCard from "./QuestionCard";
+import CameraStub from "../camera/CameraStub";
 
 export default function ExamPage(): JSX.Element {
     const [questions, setQuestions]: [
@@ -30,6 +31,10 @@ export default function ExamPage(): JSX.Element {
         Dispatch<SetStateAction<any | null>>,
     ] = useState<any | null>(null);
     const timerRef: RefObject<number | null> = useRef<number | null>(null);
+    const questionStartRef = useRef<number>(Date.now());
+    const [emotions, setEmotions] = useState<EmotionEntry[]>([]);
+    const [cameraActive, setCameraActive] = useState<boolean>(false);
+    const DRAFT_KEY = "teds_exam_draft";
 
     useEffect(() => {
         const ac: AbortController = new AbortController();
@@ -43,15 +48,69 @@ export default function ExamPage(): JSX.Element {
 
     useEffect(() => {
         if (!questions || questions.length === 0) return;
-        timerRef.current = window.setInterval(
-            () => setSeconds((s) => s + 1),
-            1000
-        );
+        // Restore draft if present (prefer server draft, fallback to localStorage)
+        (async () => {
+            try {
+                const res = await fetch(`/api/session?user=guest`);
+                if (res.ok) {
+                    const js = await res.json();
+                    if (js && js.payload) {
+                        const payload = js.payload as any;
+                        if (
+                            Array.isArray(payload.answers) &&
+                            typeof payload.index === "number"
+                        ) {
+                            setIndex(payload.index);
+                            setAnswers(payload.answers);
+                            setSeconds(payload.seconds ?? 0);
+                            if (Array.isArray(payload.emotion_log))
+                                setEmotions(payload.emotion_log);
+                        }
+                    }
+                }
+            } catch {}
+
+            try {
+                const raw = localStorage.getItem(DRAFT_KEY);
+                if (raw) {
+                    const draft = JSON.parse(raw);
+                    if (
+                        draft &&
+                        Array.isArray(draft.answers) &&
+                        typeof draft.index === "number"
+                    ) {
+                        setIndex(draft.index);
+                        setAnswers(draft.answers);
+                        setSeconds(draft.seconds ?? 0);
+                        if (Array.isArray(draft.emotion_log))
+                            setEmotions(draft.emotion_log);
+                    }
+                }
+            } catch {}
+
+            questionStartRef.current = Date.now();
+
+            timerRef.current = window.setInterval(
+                () => setSeconds((s) => s + 1),
+                1000
+            );
+        })();
         const onUnload: () => void = () => {
             if (timerRef.current) {
                 clearInterval(timerRef.current);
                 timerRef.current = null;
             }
+            // save draft synchronously to localStorage
+            try {
+                const draft = {
+                    user_id: "guest",
+                    index,
+                    answers,
+                    seconds,
+                    emotion_log: emotions,
+                };
+                localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+            } catch {}
         };
         window.addEventListener("beforeunload", onUnload);
         return () => {
@@ -60,11 +119,46 @@ export default function ExamPage(): JSX.Element {
         };
     }, [questions]);
 
+    async function saveDraftServer(draft: any) {
+        try {
+            await fetch("/api/session", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(draft),
+            });
+        } catch (err) {
+            // ignore server save errors in dev
+        }
+    }
+
     const onSelect = (choice: number) => {
         const q: Question = questions![index];
-        setAnswers((p) => [...p, { question_id: q.id, answer: choice }]);
+        const now = Date.now();
+        const timeSpentMs = now - (questionStartRef.current || now);
+        questionStartRef.current = now;
+        const answerObj: Answer = {
+            question_id: q.id,
+            answer: choice,
+            time_spent_ms: timeSpentMs,
+        } as Answer;
+        setAnswers((p) => {
+            const next = [...p, answerObj];
+            // autosave to localStorage
+            try {
+                const draft = {
+                    user_id: "guest",
+                    index: index + 1,
+                    answers: next,
+                    seconds,
+                    emotion_log: emotions,
+                };
+                localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+                void saveDraftServer(draft);
+            } catch {}
+            return next;
+        });
         if (index + 1 < (questions ?? []).length) setIndex(index + 1);
-        else finish([...answers, { question_id: q.id, answer: choice }]);
+        else finish([...answers, answerObj]);
     };
 
     async function finish(finalAnswers: Answer[]) {
@@ -74,6 +168,7 @@ export default function ExamPage(): JSX.Element {
             const payload: ExamResult = {
                 user_id: "guest",
                 answers: finalAnswers,
+                emotion_log: emotions,
             };
             try {
                 const res: Response = await fetch("/api/submit", {
@@ -131,18 +226,33 @@ export default function ExamPage(): JSX.Element {
                                 <TimerDisplay seconds={seconds} />
                             </p>
                         </div>
-                        <img
-                            src={PlaceholderImage.src}
-                            alt="reloj"
-                            className="h-fit w-fit"
-                        />
+
+                        <div className="flex items-center gap-2">
+                            <CameraStub
+                                onEmotion={(e) => {
+                                    setEmotions((p) => [
+                                        ...p,
+                                        {
+                                            timestamp: e.timestamp,
+                                            emotion: e.emotion,
+                                            confidence: e.confidence,
+                                        },
+                                    ]);
+                                    setCameraActive(true);
+                                }}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
             {result ? (
                 <div className="m-4 rounded bg-white p-4 shadow">
                     <p>
-                        Resultado: {(typeof result === "string" ? result : JSON.stringify(result)).replace(/,/g, ", ")}
+                        Resultado:{" "}
+                        {(typeof result === "string"
+                            ? result
+                            : JSON.stringify(result)
+                        ).replace(/,/g, ", ")}
                     </p>
                     <p>Redirigiendo al panel principal...</p>
                 </div>
