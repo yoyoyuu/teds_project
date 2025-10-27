@@ -55,7 +55,7 @@ export default function Dashboard() {
     ];
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen">
             <div className="relative p-8">
                 <div className="fixed left-5 top-20 flex flex-col gap-4">
                     <button
@@ -78,7 +78,13 @@ export default function Dashboard() {
                 </div>
 
                 <div className="max-w-4xl mx-auto text-center mt-10">
-                    <div className="text-[#ffb30f] text-5xl mb-4">🔥</div>
+                    <div className="flex items-center justify-center gap-3 mb-6">
+                        <div className="flex items-center gap-2 bg-white border-2 border-[#ffb30f] rounded-lg px-4 py-2 shadow-sm">
+                            <div className="text-[#ffb30f] text-3xl">🔥</div>
+                            <span className="text-2xl font-bold text-gray-800">3</span>
+                        </div>
+                        <span className="text-gray-600 text-lg font-medium">días de racha</span>
+                    </div>
 
                     <ProgressBar progress={70} />
 
@@ -90,7 +96,7 @@ export default function Dashboard() {
                     </button>
                 </div>
 
-                {/* 📘 Panel lateral derecho */}
+
                 <div className="fixed right-8 top-32 flex flex-col gap-6">
                     <DailyReinforcement topics={reinforcementTopics} />
                     <DailyChallenge
