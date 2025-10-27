@@ -56,7 +56,8 @@ export interface RegisterRequest {
 export interface RegisterResponse {
   success: boolean;
   message: string;
-  user?: Omit<User, "password">; // devolver datos sin la contraseña
+  user?: Omit<User, "password">;
+  token?: string;
 }
 
 export interface PanasAnswer {
