@@ -1,18 +1,29 @@
-export type FixedLengthArray<T, N extends number, A extends T[] = []> =
-    A['length'] extends N
-        ? A
-        : FixedLengthArray<T, N, [...A, T]>;
+export type FixedLengthArray<
+    T,
+    N extends number,
+    A extends T[] = [],
+> = A["length"] extends N ? A : FixedLengthArray<T, N, [...A, T]>;
 
 // Exam and Question Types
 
 export interface Answer {
     question_id: number;
     answer: number;
+    /** Time spent in milliseconds answering this question (optional) */
+    time_spent_ms?: number;
 }
 
 export interface ExamResult {
     user_id?: string;
     answers: Answer[];
+    /** optional emotion log captured during the session */
+    emotion_log?: EmotionEntry[];
+}
+
+export interface EmotionEntry {
+    timestamp: string; // ISO
+    emotion: string; // e.g. 'concentration', 'frustration', 'boredom', 'neutral'
+    confidence?: number; // 0..1
 }
 
 export interface Question {
@@ -37,26 +48,26 @@ export interface StatsResult {
 export type UserRole = "student" | "teacher";
 
 export interface User {
-  id: number;
-  name: string;
-  age: number;
-  email: string;
-  password: string;
-  role: UserRole;
+    id: number;
+    name: string;
+    age: number;
+    email: string;
+    password: string;
+    role: UserRole;
 }
 
 export interface RegisterRequest {
-  name: string;
-  age: number;
-  email: string;
-  password: string;
-  role: UserRole;
+    name: string;
+    age: number;
+    email: string;
+    password: string;
+    role: UserRole;
 }
 
 export interface RegisterResponse {
-  success: boolean;
-  message: string;
-  user?: Omit<User, "password">; // devolver datos sin la contraseña
+    success: boolean;
+    message: string;
+    user?: Omit<User, "password">; // devolver datos sin la contraseña
 }
 
 export interface PanasAnswer {
