@@ -78,7 +78,7 @@ export default function RegisterUser() {
                     <input
                         type="text"
                         name="name"
-                        placeholder="Nombre completo"
+                        placeholder="Nombre"
                         value={formData.name}
                         onChange={handleChange}
                         className="border rounded-md p-2"
@@ -88,7 +88,7 @@ export default function RegisterUser() {
                     <input
                         type="number"
                         name="age"
-                        placeholder="Edad (7–11 años)"
+                        placeholder="Edad"
                         value={formData.age}
                         onChange={handleChange}
                         className="border rounded-md p-2"

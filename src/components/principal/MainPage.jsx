@@ -10,7 +10,7 @@ export default function MainPage() {
 
     return (
         <div className="flex flex-col items-center justify-between min-h-screen text-center">
-            <img src="/images/logo/logo_temp.jpg" alt="Logo Feel-Face" className="w-90 my-5" />
+            <img src="/images/logo/logo_temp.svg" alt="Logo Feel-Face" className="w-60 my-5" />
 
             <div className="flex gap-2 mb-8">
                 {["Registrarse", "Inicio de Sesión"].map((text, idx) => (
