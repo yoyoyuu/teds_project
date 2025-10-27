@@ -32,9 +32,12 @@ export default function LoginUser() {
             const data = await res.json();
 
             if (res.ok && data.success) {
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("username", data.user.name);
+                localStorage.setItem("user_id", data.user.id.toString());
                 alert("Inicio de sesión exitoso");
                 setTimeout(() => {
-                    window.location.href = "/areas";
+                    window.location.href = "/dashboard";
                 }, 1000);
             } else {
                 setErrorMessage(data.error || "Error al iniciar sesión");

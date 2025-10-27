@@ -27,7 +27,7 @@ export default function AreasPage() {
 
     const handleStart = () => { // para boton del examen
         if (selectedArea) {
-            window.location.href = "/diagnostico";
+            window.location.href = "/panas";
         }
     };
 
