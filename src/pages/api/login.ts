@@ -1,58 +1,66 @@
 import { readFile } from "fs/promises";
 import os from "os";
 import path from "path";
+import type { User, RegisterResponse } from "../../types";
 
 export async function POST({ request }: { request: Request }) {
-    const { email, password } = await request.json();
-
-    if (!email || !password) {
-        return new Response(
-            JSON.stringify({ success: false, error: "Todos los campos son obligatorios" }),
-            { status: 400 }
-        );
-    }
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        return new Response(
-            JSON.stringify({ success: false, error: "Formato de correo inválido" }),
-            { status: 400 }
-        );
-    }
-
-    const usersFilePath = path.join(os.tmpdir(), "teds_project_users.json");
-    let users = [];
-
     try {
-        const data = await readFile(usersFilePath, "utf-8");
-        users = JSON.parse(data);
-    } catch {
-        return new Response(
-            JSON.stringify({ success: false, error: "No hay usuarios registrados" }),
-            { status: 404 }
-        );
-    }
+        const { email, password } = await request.json();
 
-    const user = users.find((u: any) => u.email === email);
+        if (!email || !password) {
+            return new Response(
+                JSON.stringify({ success: false, error: "Todos los campos son obligatorios" }),
+                { status: 400 }
+            );
+        }
 
-    if (!user) {
-        return new Response(JSON.stringify({ error: "Usuario no encontrado" }), { status: 401 });
-    }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            return new Response(
+                JSON.stringify({ success: false, error: "Formato de correo inválido" }),
+                { status: 400 }
+            );
+        }
 
-    if (user.password !== password) {
-        return new Response(JSON.stringify({ error: "Contraseña incorrecta" }), { status: 401 });
-    }
+        const usersFilePath = path.join(os.tmpdir(), "teds_project_users.json");
+        let users: User[] = [];
 
-    const { password: _, ...safeUser } = user; // pa no enviar contraseña yay
+        try {
+            const data = await readFile(usersFilePath, "utf-8");
+            users = JSON.parse(data);
+        } catch {
+            return new Response(
+                JSON.stringify({ success: false, error: "No hay usuarios registrados" }),
+                { status: 404 }
+            );
+        }
 
-    const dummyToken = `dummy-${safeUser.id}-${Date.now()}`;
+        const user = users.find(u => u.email === email);
 
-    return new Response(
-        JSON.stringify({
+        if (!user || user.password !== password) {
+            return new Response(
+                JSON.stringify({ success: false, error: "Email o contraseña incorrectos" }),
+                { status: 401 }
+            );
+        }
+
+        const { password: _, ...safeUser } = user;
+
+        const token = `dummy-${safeUser.id}-${Date.now()}`;
+
+        const response: RegisterResponse = {
             success: true,
             message: "Inicio de sesión exitoso",
             user: safeUser,
-            token: dummyToken,
-        }),
-        { status: 200 }
-    );
+            token,
+        };
+
+        return new Response(JSON.stringify(response), { status: 200 });
+
+    } catch (error) {
+        console.error("Error al hacer login:", error);
+        return new Response(
+            JSON.stringify({ success: false, error: "Error interno del servidor" }),
+            { status: 500 }
+        );
+    }
 }
